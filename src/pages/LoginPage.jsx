@@ -1,22 +1,22 @@
-import { Button, Input, Stack, Flex, Box, Text } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, Input, Stack, Flex, Box, Text } from "@chakra-ui/react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
 import { NavLink } from "react-router-dom";
 
 const schema = z.object({
     username: z.string().min(1, "Nazwa użytkownika jest wymagana"),
     password: z.string().min(6, "Hasło musi mieć co najmniej 6 znaków"),
-});
+})
 
 const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
-    });
+    })
 
     const onSubmit = (data) => {
-        console.log("Zalogowano:", data);
-    };
+        console.log(data)
+    }
 
     return (
         <Flex
@@ -41,15 +41,15 @@ const LoginPage = () => {
                         Logowanie
                     </Text>
                     <Text fontSize="sm" color="gray.300">
-                        Wprowadź swoje dane, aby się zalogować
+                        Zaloguj się na stronie
                     </Text>
                 </Stack>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={4} mt={4}>
                         <div>
-                            <label htmlFor="username">Nazwa użytkownika</label>
-                            <Input id="username" {...register("username")} />
+                            <label htmlFor="name">Nazwa użytkownika</label>
+                            <Input id="name" {...register("username")} />
                             {errors.username && <Text color="red.500">{errors.username.message}</Text>}
                         </div>
 
@@ -65,14 +65,16 @@ const LoginPage = () => {
                     </Stack>
                 </form>
             </Box>
+
             <Text fontSize="md" color="gray.300">
                 Nie masz konta?
-                <Text display="inline" color="white" fontWeight="bold">
-                   <NavLink  to="/register"> Zarejestruj się</NavLink>
-                </Text>           
+                <Text as="span" display="inline" color="white" fontWeight="bold">
+                    <NavLink to="/register"> Zarejestruj się</NavLink>
+                </Text>
             </Text>
+            
         </Flex>
-    );
-};
+    )
+}
 
-export default LoginPage;
+export default LoginPage

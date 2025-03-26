@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
 import { NavLink } from "react-router-dom";
+import useRegister from "../services/useRegister";
 
 const schema = z.object({
     username: z.string().min(1, "Nazwa użytkownika jest wymagana"),
@@ -11,12 +12,16 @@ const schema = z.object({
 })
 
 const RegisterPage = () => {
+
+    const {mutateAsync, isLoading, error} = useRegister();
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     })
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        const res = await mutateAsync(data)
+       console.log(res)
     }
 
     return (
@@ -66,7 +71,7 @@ const RegisterPage = () => {
                             {errors.password && <Text color="red.500">{errors.password.message}</Text>}
                         </div>
 
-                        <Button type="submit" colorScheme="teal" width="full" mt={4}>
+                        <Button loading={isLoading} type="submit" colorScheme="teal" width="full" mt={4}>
                             Zarejestruj się
                         </Button>
                     </Stack>
@@ -74,7 +79,7 @@ const RegisterPage = () => {
             </Box>
             <Text fontSize="md" color="gray.300">
                 Masz już konto?
-                <Text display="inline" color="white" fontWeight="bold">
+                <Text as="span" display="inline" color="white" fontWeight="bold">
                    <NavLink  to="/login"> Zaloguj się</NavLink>
                 </Text>           
             </Text>
