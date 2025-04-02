@@ -2,7 +2,7 @@ import { Button, Input, Stack, Flex, Box, Text } from "@chakra-ui/react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useRegister from "../services/useRegister";
 
 const schema = z.object({
@@ -13,7 +13,9 @@ const schema = z.object({
 
 const RegisterPage = () => {
 
-    const {mutateAsync, isLoading, error} = useRegister();
+    const {mutateAsync, isLoading} = useRegister();
+    const navigate = useNavigate
+
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
@@ -21,7 +23,7 @@ const RegisterPage = () => {
 
     const onSubmit = async (data) => {
         const res = await mutateAsync(data)
-       console.log(res)
+        navigate("/login")
     }
 
     return (
@@ -71,7 +73,7 @@ const RegisterPage = () => {
                             {errors.password && <Text color="red.500">{errors.password.message}</Text>}
                         </div>
 
-                        <Button loading={isLoading} type="submit" colorScheme="teal" width="full" mt={4}>
+                        <Button loading={isLoading} loadingText="Zarejestruj się" type="submit" colorScheme="teal" width="full" mt={4}>
                             Zarejestruj się
                         </Button>
                     </Stack>

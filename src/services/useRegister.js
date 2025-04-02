@@ -8,11 +8,12 @@ const useRegister = () => {
       return response;
     },
     {
-      onSuccess: () => {
-        console.log("rejestracja udana");
+      onSuccess: (data) => {
+        alert("Zarejestrowano pomyślnie")
       },
-      onError: () => {
-        console.log("błąd rejestracji");
+      onError: (error) => {
+        alert("Zarejestrowano pomyślnie")
+        
       },
     }
   );
