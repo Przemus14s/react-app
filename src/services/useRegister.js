@@ -1,19 +1,25 @@
 import { useMutation } from "react-query";
 import axiosInstance from "./axiosInstance";
+import { toaster } from "../components/ui/toaster"
 
 const useRegister = () => {
   return useMutation(
     async (body) => {
       const response = await axiosInstance.post("/auth/register", body);
-      return response;
+      return response.data;
     },
     {
       onSuccess: (data) => {
-        alert("Zarejestrowano pomyślnie")
+        toaster.create({
+          title: data.message,
+          type: data.status,
+        });
       },
       onError: (error) => {
-        alert("Zarejestrowano pomyślnie")
-        
+        toaster.create({
+          title: error.response?.data?.message,
+          type: error.response?.data?.status,
+        });
       },
     }
   );

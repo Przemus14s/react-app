@@ -1,5 +1,6 @@
 import { useMutation } from "react-query";
 import axiosInstance from "./axiosInstance";
+import { toaster } from "../components/ui/toaster"
 
 const useLogin = () => {
   return useMutation(
@@ -7,13 +8,22 @@ const useLogin = () => {
       const response = await axiosInstance.post("/auth/login", body);
       const data = response.data;
       localStorage.setItem("token", data.token);
+      return data;
     },
     {
-      onSuccess: () => {
-        alert("Udało się")
+      onSuccess: (data) => {
+        toaster.create({
+          title: data.message,
+          type: data.status
+        });
       },
-      onError: () => {
-        alert("Nie udało się")
+      onError: (err) => {
+        const res = err.response.data
+        console.log(res);
+        toaster.create({
+          title: res.message,
+          type: res.status,
+        });
       },
     }
   );

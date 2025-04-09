@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod";
 import { NavLink, useNavigate } from "react-router-dom";
 import useRegister from "../services/useRegister";
+import { useEffect, useRef } from "react";
+import { toaster } from "../components/ui/toaster"
 
 const schema = z.object({
     username: z.string().min(1, "Nazwa użytkownika jest wymagana"),
@@ -20,6 +22,21 @@ const RegisterPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     })
+
+    useEffect(() => {
+        const values = Object.entries(errors)
+        console.log(values);
+        values.map((val,index) => {
+            setTimeout(() => {
+                toaster.create({
+                    title: val[1].message,
+                    type: "error",
+                });
+            }, index * 100);
+        })
+    }, [errors]);
+
+
 
     const onSubmit = async (data) => {
         const res = await mutateAsync(data)
@@ -53,12 +70,12 @@ const RegisterPage = () => {
                     </Text>
                 </Stack>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <Stack spacing={4} mt={4}>
                         <div>
                             <label htmlFor="name">Nazwa użytkownika</label>
                             <Input id="name" {...register("username")} />
-                            {errors.username && <Text color="red.500">{errors.username.message}</Text>}
+                            {/* {errors.username && <Text color="red.500">{errors.username.message}</Text>} */}
                         </div>
 
                         <div>
@@ -70,7 +87,7 @@ const RegisterPage = () => {
                         <div>
                             <label htmlFor="password">Hasło</label>
                             <Input id="password" type="password" {...register("password")} />
-                            {errors.password && <Text color="red.500">{errors.password.message}</Text>}
+                            {/* {errors.password && <Text color="red.500">{errors.password.message}</Text>} */}
                         </div>
 
                         <Button loading={isLoading} loadingText="Zarejestruj się" type="submit" colorScheme="teal" width="full" mt={4}>

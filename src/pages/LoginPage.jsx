@@ -16,6 +16,7 @@ const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
     })
+
     const onSubmit = async (data) => {
         const res = await mutateAsync(data)
         navigate("/")

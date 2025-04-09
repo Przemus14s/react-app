@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { Provider } from "./components/ui/provider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ProtectedRoute from "./components/custom/ProtectedRoute";
 
@@ -12,7 +11,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider>
         <BrowserRouter>
           <Routes>
             <Route element={<ProtectedRoute />}>
@@ -22,7 +20,6 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </BrowserRouter>
-      </Provider>
     </QueryClientProvider>
   )
 }
