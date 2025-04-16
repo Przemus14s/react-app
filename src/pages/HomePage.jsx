@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/custom/Navbar";
 import ScrapCard from "../components/custom/ScrapCards";
 import useGetScraps from "../services/useGetScraps";
 import { SimpleGrid, Skeleton, Box, Flex } from "@chakra-ui/react";
+import MainTemplate from "./MainTemplate";
 
 const HomePage = () => {
   const { data, isLoading } = useGetScraps();
@@ -20,8 +20,9 @@ const HomePage = () => {
   }, [isLoading]);
 
   return (
+    <MainTemplate>
+      <div>
     <Flex direction="column" bg="gray.900" minH="100vh">
-      <Navbar />
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={5} p={6}>
         {isLoading || !showData
@@ -51,6 +52,8 @@ const HomePage = () => {
             ))}
       </SimpleGrid>
     </Flex>
+    </div>
+    </MainTemplate>
   );
 };
 

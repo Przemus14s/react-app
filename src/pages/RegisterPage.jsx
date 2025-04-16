@@ -75,7 +75,6 @@ const RegisterPage = () => {
                         <div>
                             <label htmlFor="name">Nazwa użytkownika</label>
                             <Input id="name" {...register("username")} />
-                            {/* {errors.username && <Text color="red.500">{errors.username.message}</Text>} */}
                         </div>
 
                         <div>
@@ -87,7 +86,6 @@ const RegisterPage = () => {
                         <div>
                             <label htmlFor="password">Hasło</label>
                             <Input id="password" type="password" {...register("password")} />
-                            {/* {errors.password && <Text color="red.500">{errors.password.message}</Text>} */}
                         </div>
 
                         <Button loading={isLoading} loadingText="Zarejestruj się" type="submit" colorScheme="teal" width="full" mt={4}>

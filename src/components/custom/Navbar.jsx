@@ -1,45 +1,50 @@
-import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import useLogout from '../../services/useLogout';
-import { Box, Button, Flex, HStack, Spacer, Text } from '@chakra-ui/react';
+import { Button, Flex, Spacer, Box, Link } from '@chakra-ui/react'
+import React from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import useLogout from '../../services/useLogout'
+
 
 const Navbar = () => {
-  const navigate = useNavigate();
+
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    useLogout();
-    navigate('/login');
-  };
+    useLogout()
+    navigate("/login")
+  }
 
   return (
-    <Box bg="gray.800" px={6} py={4} boxShadow="md">
+    <Box bg="teal.500" p={4} color="white">
       <Flex align="center">
-        <HStack spacing={6}>
-          <NavLink to="/">
-            <Text color="white" fontWeight="bold" _hover={{ color: 'teal.300' }}>
-              HomePage
-            </Text>
-          </NavLink>
-          <NavLink to="/login">
-            <Text color="white" _hover={{ color: 'teal.300' }}>
-              Login
-            </Text>
-          </NavLink>
-          <NavLink to="/register">
-            <Text color="white" _hover={{ color: 'teal.300' }}>
-              Register
-            </Text>
-          </NavLink>
-        </HStack>
+        <NavLink to="/">
+          <Box fontSize="xl" fontWeight="bold" color="white">
+            Homepage
+          </Box>
+        </NavLink>
 
         <Spacer />
 
-        <Button size="sm" colorScheme="teal" onClick={handleLogout}>
+        <Flex gap={4}>
+          <NavLink to="/">
+            <Link fontSize="lg" _hover={{ textDecoration: "underline", color: "teal.200" }} color="white">
+              Panel
+            </Link>
+          </NavLink>
+          <NavLink to="/search">
+            <Link fontSize="lg" _hover={{ textDecoration: "underline", color: "teal.200" }} color="white">
+              Wyszukiwarka
+            </Link>
+          </NavLink>
+        </Flex>
+
+        <Spacer />
+
+        <Button colorScheme="teal" variant="outline" onClick={handleLogout}>
           Wyloguj
         </Button>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
