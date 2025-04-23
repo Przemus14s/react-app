@@ -4,7 +4,7 @@ import { toaster } from "../components/ui/toaster";
 
 const useSearch = () => {
   return useMutation(
-    async (body) => {
+    async (body, type) => {
       const response = await axiosInstance.post(
         "/scrap/get-by-title", 
         body,
@@ -19,13 +19,13 @@ const useSearch = () => {
       onSuccess: (data) => {
         toaster.create({
           title: data.message,
-          type: "success",
+          type: data.status,
         });
       },
       onError: (error) => {
         toaster.create({
-          title: error.response?.data?.message || "Wystąpił błąd",
-          type: "error",
+          title: error.response?.data?.message,
+          type: error.response?.data?.status,
         });
       },
     }

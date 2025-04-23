@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ScrapCard from "../components/custom/ScrapCards";
 import useGetScraps from "../services/useGetScraps";
-import { SimpleGrid, Skeleton, Box, Flex } from "@chakra-ui/react";
+import { SimpleGrid, Skeleton, Box, Flex, Button } from "@chakra-ui/react";
 import MainTemplate from "./MainTemplate";
+import useExcelExport from "../services/useExcelExport";
 
 const HomePage = () => {
   const { data, isLoading } = useGetScraps();
@@ -19,9 +20,16 @@ const HomePage = () => {
     }
   }, [isLoading]);
 
+  const {mutateAsync: toExcel} = useExcelExport()
+
+  const handleGenerateExcel = async () => {
+      await toExcel(data.data)
+  }
+
   return (
     <MainTemplate>
       <div>
+        <Button onClick={handleGenerateExcel}>Eksportuj</Button>
     <Flex direction="column" bg="gray.900" minH="100vh">
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={5} p={6}>
